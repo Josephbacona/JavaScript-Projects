@@ -5,7 +5,7 @@ function Ride_Function() {                                                  //Th
     document.getElementById("Ride").innerHTML = Can_ride + " to ride.";
 }
 
-function Vote_Function()                                                //This is also a ternary operator.                                        
+function Vote_Function() {                                                //This is also a ternary operator.                                        
     var Age, Can_vote;                                                  //This function determines whether or not
     Age = document.getElementById("Age").value;                         //a person is old enough to vote.
     Can_vote = (Age < 18) ? "You are too young":"You are old enough";
