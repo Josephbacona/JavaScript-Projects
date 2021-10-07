@@ -18,7 +18,7 @@ function placeXOrO(squareNumber) {
             //Active player may only be 'X' or 'O' so, if not 'X' it must be 'O'
         } else {
             //If activePlayer is equal to 'O', the o.png is placed in HTML.
-            select.style.backgroundImage = 'url ("images/o.png")';
+            select.style.backgroundImage = 'url("images/o.png")';
         }
         //squareNumber and activePlayer are concatenated together and added to array.
         selectedSquares.push(squareNumber + activePlayer);
@@ -148,7 +148,7 @@ function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
     //This line gives us access to methods and properties to use on canvas.
     const c = canvas.getContext('2d');
     //This line indicates where the start of a lines x axis is.
-    let xl = coordX1,
+    let x1 = coordX1,
         //This line indicates where the start of a lines y axis is.
         y1 = coordY1,
         //This line indicates wher the end of a lines x axis is.
@@ -179,7 +179,7 @@ function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
             //This method draws everything we laid out above.
             c.stroke();
             //This condition checks if we've reached the endpoint.
-            if (xl <= x2 && y1 <= y2) {
+            if (x1 <= x2 && y1 <= y2) {
                 //This condition adds 10 to the previos end x point.
                 if (x< x2) { x += 10; }
                 //This condition adds 10 to the previos end y point.
@@ -209,7 +209,7 @@ function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
         //This line disallows clicking while the win sound is playing
         disableClick();
         //This line plays the win sounds.
-        audio('./winGame.wav');
+        audio('./media/winGame.wav');
         //This line calls our main animation loop.
         animateLineDrawing();
         //This line waits 1 second. Then, clears canvas, resets game, and allows clicking again.
