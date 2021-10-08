@@ -21,7 +21,7 @@ function Input_Digit(digit) {
     } else {
     // this overwrites Display_Value if the current value is 0
     // otherwise is adds onto it
-        Calculator.Display_Value - Display_Value === '0' ? digit : Display_Value + digit;
+        Calculator.Display_Value = Display_Value === '0' ? digit : Display_Value + digit;
     }
 }
 // thsi section handles decimal points
@@ -46,7 +46,7 @@ function Handle_Operator(Next_Operator) {
     //checks if an operator already exists and if Wait_Second_Operand is true,
     //then updates the operator and exits from the function
     if (operator && Calculator.Wait_Second_Operand) {
-        Calculator.operator - Next_Operator;
+        Calculator.operator = Next_Operator;
         return;
     }
     if (First_Operand == null) {
@@ -56,9 +56,9 @@ function Handle_Operator(Next_Operator) {
         //if operator exists, property lookup is performed for the operator
         //in the Perform_Calculation onject and the function that matches the 
         //operator is executed
-        let reslult = Perform_Calculation[operator](Value_Now, Value_of_Input);
+        let result = Perform_Calculation[operator](Value_Now, Value_of_Input);
         //here we add a fixed amount of numbers af after the decimal
-        resullt = Number(result).toFixed(9)
+        result = Number(result).toFixed(9)
         //this will remove any trailing 0's
         result = (result * 1).toString()
         Calculator.Display_Value = parseFloat(result);
@@ -66,14 +66,18 @@ function Handle_Operator(Next_Operator) {
 
     }
     Calculator.Wait_Second_Operand = true;
-    Calculator.First_Operand = parseFloat(result);
+    Calculator.operator = Next_Operator;
 }
 
 const Perform_Calculation = {
     '/': (First_Operand, Second_Operand) => First_Operand / Second_Operand,
+
     '*': (First_Operand, Second_Operand) => First_Operand * Second_Operand,
+
     '+': (First_Operand, Second_Operand) => First_Operand + Second_Operand,
+
     '-': (First_Operand, Second_Operand) => First_Operand - Second_Operand,
+
     '=': (First_Operand, Second_Operand) => Second_Operand
 };
 
@@ -98,6 +102,18 @@ keys.addEventListener('click', (event) => {
     const { target } = event;
     // if the element that was clicked on is not a button, exit the function
     if (!target.matches('button')) {
+        return;
+    }
+
+    if (target.classList.contains('operator')) {
+        Handle_Operator(target.value);
+        Update_Display();
+        return;
+    }
+    // ensures that AC clears the numbers from the calculator
+    if (target.classList.contains('all-clear')) {
+        Calculator_Reset();
+        Update_Display();
         return;
     }
 
